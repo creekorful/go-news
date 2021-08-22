@@ -30,7 +30,7 @@ type Item struct {
 
 	// relationships
 	FeedID uint
-	Feed Feed
+	Feed   Feed
 }
 
 type Database struct {
@@ -64,7 +64,7 @@ func (d *Database) CreateItem(feed *Feed, item *Item) error {
 
 func (d *Database) GetItems() ([]Item, error) {
 	var items []Item
-	tx := d.db.Preload("Feed").Find(&items)
+	tx := d.db.Preload("Feed").Order("publish_date DESC").Find(&items)
 
 	return items, tx.Error
 }
